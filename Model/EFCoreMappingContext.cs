@@ -35,5 +35,11 @@ namespace TPH_TPT_EF_Core_Mapping.Model
         public DbSet<Cat> Cats { get; set; }
 
         #endregion
+
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Model> Models { get; set; }
+        public DbSet<Product> Products { get; set; }
+
     }
 }
