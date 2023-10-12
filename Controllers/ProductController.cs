@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TPH_TPT_EF_Core_Mapping.Model;
 using Microsoft.EntityFrameworkCore;
+using Application.IServices;
 
 namespace TPH_TPT_EF_Core_Mapping.Controllers
 {
@@ -10,10 +11,12 @@ namespace TPH_TPT_EF_Core_Mapping.Controllers
     public class ProductController : ControllerBase
     {
         private readonly EFCoreMappingContext _context;
+        private readonly IProductService _pService;
 
-        public ProductController(EFCoreMappingContext context)
+        public ProductController(EFCoreMappingContext context, IProductService pService)
         {
             _context = context;
+            _pService = pService;
         }
         [HttpGet]
         public IActionResult AddProduct()
@@ -43,8 +46,10 @@ namespace TPH_TPT_EF_Core_Mapping.Controllers
 
 
         [HttpGet]
-        public IActionResult DoQuery()
+        public async Task<IActionResult> DoQuery()
         {
+            var t = await _pService.SayHello("Ali");
+
             var query = _context.Products.DistinctBy(p => p.Name);  
             var query1 = _context.Products.Select(x => x.Name).Distinct().ToList();
             return Ok();
